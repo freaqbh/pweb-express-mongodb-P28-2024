@@ -8,7 +8,7 @@ import exp from "constants";
 router.get ('/', auth, bookcontroller.getAllBooks);
 router.post('/', auth, bookcontroller.addBook);
 router.get ('/:id', auth, bookcontroller.getBookById);
-router.put ('/:id', auth, bookcontroller.updateBook);
+router.patch ('/:id', auth, bookcontroller.updateBook);
 router.delete('/:id', auth, bookcontroller.deleteBookById);
 
 export default router;
