@@ -44,13 +44,24 @@ export const authcontroller = {
 
     async healthCheck(req: Request, res: Response, next: NextFunction) {
         const currentDate = new Date().toISOString().split('T')[0];
-        res.status(200).send({
-            status: "success",
-            message: "Auth service is running",
-            data: {
-                date: currentDate,
-            },
-            
-        });
+        try {
+            res.status(200).send({
+                status: "success",
+                message: "Auth service is running",
+                data: {
+                    date: currentDate,
+                },
+                
+            });
+        } catch (error) {
+            res.status(500).send({
+                status: "error",
+                message: "Health check encountered an error",
+                data: {
+                    date: currentDate,
+                    error: error,
+                },
+            });
+        }
     }
 };

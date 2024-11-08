@@ -35,4 +35,28 @@ export const mechanismcontroller = {
             });
         }
     },
+
+    async healthCheck(req: Request, res: Response, next: NextFunction) {
+        const currentDate = new Date().toISOString().split('T')[0];
+        try {
+            res.status(200).send({
+                status: "success",
+                message: "Mechanism service is running",
+                data: {
+                    date: currentDate,
+                },
+                
+            });
+        } catch (error) {
+            res.status(500).send({
+                status: "error",
+                message: "Health check encountered an error",
+                data: {
+                    date: currentDate,
+                    error: error,
+                },
+            });
+        }
+        
+    }
 };
