@@ -25,7 +25,6 @@ export const auth = async (req: Request, res: Response, next: NextFunction) => {
             return res.status(401).send({ error: 'Invalid token or user not found' });
         }
 
-        // Attach token and user to the request object
         (req as any).token = token;
         (req as any).user = user;
         next();

@@ -1,6 +1,6 @@
 import { userInterface } from "../models/user.models";
 import bcrypt from "bcrypt";
-import User from "../models/user.models";
+import  User  from "../models/user.models";
 
 interface newUser {
     username: string;
@@ -20,18 +20,13 @@ export const auth = {
             
             if (!User.db) throw new Error("Database connection error");
 
-           
-            const existingUser = await User.findOne({ username });
-            if (existingUser) {
-                throw new Error("Username is already taken");
-            }
+            
+            const user = new User({ username, password });
+            await user.save();
 
-          
-            const hashedPassword = await bcrypt.hash(password, 8);
-            const newUser = new User({ username, password: hashedPassword });
-            await newUser.save();
-
-            return newUser;
+            
+            const token = await user.generateAuthToken();
+            return user;
         } catch (error) {
             console.error("Error registering user:", (error as Error).message || error);
             throw new Error("Could not register user. Please try again.");
